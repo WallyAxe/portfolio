@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wallace Machado — Computer Engineer</title>
+<meta name="description" content="Wallace Machado — Computer Engineer building web products, business automation and AI-powered systems.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1120;
+    --card:#111827;
+    --border:#1F2937;
+    --border-hover:#2b394d;
+    --text-primary:#F8FAFC;
+    --text-secondary:#94A3B8;
+    --text-tertiary:#64748B;
+    --accent:#6366F1;
+    --status-dot:#34D399;
+    --radius-lg:20px;
+    --radius-sm:8px;
+    --font-sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --font-mono:'JetBrains Mono',ui-monospace,monospace;
+    --container:1200px;
+    --transition:200ms ease;
+    --transition-slow:600ms cubic-bezier(.16,1,.3,1);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);color:var(--text-primary);font-family:var(--font-sans);
+    line-height:1.6;-webkit-font-smoothing:antialiased;font-size:16px;
+  }
+  img,svg{display:block;}
+  a{color:inherit;text-decoration:none;}
+  .container{max-width:var(--container);margin:0 auto;padding:0 32px;}
+
+  .eyebrow{
+    font-family:var(--font-mono);font-size:13px;letter-spacing:0.06em;text-transform:uppercase;
+    color:var(--accent);display:flex;align-items:center;gap:8px;margin-bottom:16px;font-weight:500;
+  }
+  .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);}
+
+  h1,h2,h3{font-weight:700;letter-spacing:-0.02em;color:var(--text-primary);}
+
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity 1400ms ease, transform 1400ms cubic-bezier(.16,1,.3,1);}
+  .reveal.in-view{opacity:1;transform:translateY(0);}
+
+  header{position:sticky;top:0;z-index:100;background:rgba(11,17,32,0.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;max-width:var(--container);margin:0 auto;}
+  .logo{font-family:var(--font-mono);font-weight:600;font-size:15px;display:flex;align-items:center;gap:10px;}
+  .logo-mark{width:28px;height:28px;border-radius:7px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;}
+  .logo-tag{font-size:12px;font-weight:500;color:var(--accent);opacity:0.85;margin-left:2px;}
+  .nav-links{display:flex;align-items:center;gap:32px;list-style:none;}
+  .nav-links a{font-size:14px;color:var(--text-secondary);transition:color var(--transition);position:relative;padding-bottom:4px;}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--text-primary);transition:width var(--transition);}
+  .nav-links a:hover{color:var(--text-primary);}
+  .nav-links a:hover::after{width:100%;}
+
+  .nav-right{display:flex;align-items:center;gap:14px;}
+  .lang-toggle{
+    font-family:var(--font-mono);font-size:12.5px;font-weight:600;color:var(--text-secondary);
+    border:1px solid var(--border);background:transparent;border-radius:100px;padding:8px 14px;
+    cursor:pointer;transition:all var(--transition);display:inline-flex;align-items:center;gap:6px;
+  }
+  .lang-toggle:hover{border-color:var(--border-hover);color:var(--text-primary);}
+  .lang-toggle .globe{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:100px;font-size:15px;font-weight:600;transition:all var(--transition);border:1px solid transparent;cursor:pointer;}
+  .btn-primary{background:var(--text-primary);color:var(--bg);}
+  .btn-primary:hover{background:var(--accent);color:#fff;transform:translateY(-1px);}
+  .btn-link{font-size:15px;font-weight:500;color:var(--text-secondary);transition:color var(--transition), gap var(--transition);display:inline-flex;align-items:center;gap:4px;}
+  .btn-link:hover{color:var(--text-primary);gap:9px;}
+
+  .hero{
+    min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;position:relative;overflow:hidden;padding:80px 24px 40px;
+  }
+  .hero-bg-word{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    font-family:var(--font-mono);font-weight:700;font-size:clamp(160px,24vw,340px);
+    color:rgba(248,250,252,0.028);white-space:nowrap;letter-spacing:-0.03em;
+    pointer-events:none;user-select:none;z-index:0;
+  }
+  .hero-content{position:relative;z-index:1;max-width:760px;}
+  .availability-pill{
+    display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border:1px solid var(--border);
+    border-radius:100px;font-size:13px;color:var(--text-secondary);background:var(--card);margin-bottom:32px;
+  }
+  .availability-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--status-dot);box-shadow:0 0 0 3px rgba(52,211,153,0.15);}
+  .hero h1{font-size:clamp(38px,6vw,72px);line-height:1.1;margin-bottom:24px;}
+  .hero h1 span{color:var(--accent);}
+  .typewriter-cursor{display:inline-block;width:3px;height:0.85em;background:var(--accent);margin-left:3px;vertical-align:-0.1em;animation:tw-blink 0.9s steps(1) infinite;}
+  @keyframes tw-blink{50%{opacity:0;}}
+  @media (prefers-reduced-motion: reduce){
+    .typewriter-cursor{animation:none;}
+  }
+  .hero-sub{font-size:18px;color:var(--text-secondary);max-width:480px;margin:0 auto 40px;}
+  .hero-ctas{display:flex;align-items:center;justify-content:center;gap:22px;}
+  .hero-or{font-family:var(--font-mono);font-size:13px;color:var(--text-tertiary);}
+
+  .scroll-cue{
+    position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+    font-family:var(--font-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--text-tertiary);z-index:1;
+  }
+  .scroll-cue .line{width:1px;height:36px;background:linear-gradient(var(--text-tertiary),transparent);animation:scrollpulse 2.2s ease-in-out infinite;}
+  @keyframes scrollpulse{0%{opacity:.2;transform:scaleY(0.4);transform-origin:top;}50%{opacity:1;transform:scaleY(1);transform-origin:top;}100%{opacity:.2;transform:scaleY(0.4);transform-origin:top;}}
+
+  .work{padding:60px 0 140px;}
+  .section-head{max-width:520px;margin-bottom:56px;}
+  .section-head h2{font-size:clamp(28px,3.4vw,42px);line-height:1.15;}
+
+  .work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+  .work-grid .work-card:nth-child(odd){transition-delay:0ms;}
+  .work-grid .work-card:nth-child(even){transition-delay:220ms;}
+  .work-card{
+    position:relative;display:block;aspect-ratio:4/3;border-radius:var(--radius-lg);overflow:hidden;
+    background:var(--card);border:1px solid var(--border);transition:border-color var(--transition), transform var(--transition);
+  }
+  .work-card:hover{border-color:var(--border-hover);transform:translateY(-4px);}
+
+  .work-visual{position:absolute;inset:0;overflow:hidden;background:linear-gradient(155deg,#151d31,#0b0f1a);}
+  .work-visual img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;transition:transform var(--transition-slow);}
+  .work-card:hover .work-visual img{transform:scale(1.06);}
+  .work-visual .work-index-badge{
+    position:absolute;top:16px;left:16px;font-family:var(--font-mono);font-size:11.5px;
+    color:var(--text-secondary);background:rgba(11,17,32,0.65);backdrop-filter:blur(4px);
+    padding:4px 10px;border-radius:20px;border:1px solid var(--border);z-index:2;
+  }
+
+  .work-overlay{
+    position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:28px;
+    background:linear-gradient(to top, rgba(11,17,32,0.55) 0%, rgba(11,17,32,0.08) 45%, transparent 70%);
+    transition:background var(--transition-slow);
+  }
+  .work-card:hover .work-overlay{background:linear-gradient(to top, rgba(11,17,32,0.94) 15%, rgba(11,17,32,0.5) 65%, rgba(11,17,32,0.05) 100%);}
+
+  .work-info{opacity:0;transform:translateY(14px);transition:opacity var(--transition-slow), transform var(--transition-slow);}
+  .work-card:hover .work-info{opacity:1;transform:translateY(0);}
+  .work-year{font-family:var(--font-mono);font-size:12px;color:var(--text-tertiary);}
+  .work-info h3{font-size:22px;margin:6px 0 8px;}
+  .work-line{font-size:14px;color:var(--text-secondary);margin-bottom:14px;max-width:32ch;}
+  .work-arrow{font-size:13.5px;font-weight:500;color:var(--text-primary);}
+
+  @media (hover:none){
+    .work-info{opacity:1;transform:none;}
+    .work-overlay{background:linear-gradient(to top, rgba(11,17,32,0.9) 10%, rgba(11,17,32,0.4) 60%, transparent 100%);}
+  }
+
+  .manifesto{padding:clamp(100px,14vw,180px) 0;text-align:center;}
+  .manifesto h2{font-size:clamp(30px,5vw,60px);line-height:1.3;max-width:880px;margin:0 auto;letter-spacing:-0.01em;}
+  .manifesto h2 span{color:var(--accent);}
+  .manifesto-sub{margin-top:28px;font-family:var(--font-mono);font-size:12.5px;color:var(--text-tertiary);letter-spacing:0.08em;text-transform:uppercase;}
+
+  .contact{text-align:center;padding:120px 0 100px;border-top:1px solid var(--border);}
+  .contact h2{font-size:clamp(30px,4.2vw,48px);margin-bottom:16px;}
+  .contact p{color:var(--text-secondary);font-size:17px;max-width:440px;margin:0 auto 40px;}
+  .contact-aside{font-family:var(--font-mono);font-size:13px;color:var(--text-tertiary);max-width:420px;margin:-24px auto 40px;}
+  .contact-links{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
+  .contact-link{
+    display:flex;align-items:center;gap:9px;padding:13px 20px;background:var(--card);border:1px solid var(--border);
+    border-radius:100px;font-size:14px;font-weight:500;transition:border-color var(--transition), transform var(--transition);
+  }
+  .contact-link:hover{border-color:var(--border-hover);transform:translateY(-2px);}
+  .contact-link .icon{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;color:var(--accent);}
+
+  footer{border-top:1px solid var(--border);padding:28px 0;}
+  footer .container{display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:12px;color:var(--text-tertiary);}
+
+  @media (max-width:900px){
+    .work-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:640px){
+    .container{padding:0 20px;}
+    .hero{min-height:auto;padding:56px 20px 100px;}
+    .hero-bg-word{font-size:110px;}
+    .hero-ctas{flex-direction:column;gap:16px;}
+    .nav-links{display:none;}
+    .nav-right{gap:8px;}
+    .nav-right .btn-primary{padding:10px 16px;font-size:13px;}
+    .lang-toggle{padding:8px 10px;}
+    .work-card{aspect-ratio:1/1;}
+    .contact-links{flex-direction:column;align-items:center;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#" class="logo"><span class="logo-mark">W</span>Wallace Machado<span class="logo-tag">&lt;automation/&gt;</span></a>
+    <ul class="nav-links">
+      <li><a href="#work" id="nav-work">Work</a></li>
+      <li><a href="#contact" id="nav-contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button type="button" class="lang-toggle" id="lang-toggle-btn" aria-label="Switch language">
+        <svg class="globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg>
+        <span id="lang-toggle-label">PT</span>
+      </button>
+      <a href="#contact" class="btn btn-primary" id="nav-cta">Contact Me</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-bg-word">WORK</div>
+  <div class="hero-content">
+    <span class="availability-pill"><span class="dot"></span><span id="avail-pill">Available for remote work</span></span>
+    <h1><span id="hero-static">Building intelligent web solutions</span> <span><span id="typewriter-text">for businesses.</span><span class="typewriter-cursor"></span></span></h1>
+    <p class="hero-sub" id="hero-sub">I build websites, automations and AI-powered systems that help companies grow.</p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn btn-primary" id="cta-view">View Projects</a>
+      <span class="hero-or" id="hero-or">or</span>
+      <a href="#contact" class="btn-link" id="cta-touch">Get in touch →</a>
+    </div>
+  </div>
+  <a href="#work" class="scroll-cue"><span id="scroll-text">Scroll</span><span class="line"></span></a>
+</section>
+
+<section id="work" class="work">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow" id="work-eyebrow">Selected Work</div>
+      <h2 id="work-h2">Some things I've built.</h2>
+    </div>
+
+    <div class="work-grid">
+      <a href="#" class="work-card reveal">
+        <div class="work-visual"><span class="work-index-badge">01</span><img src="preview-fincred.jpg" alt="Fincred preview" loading="lazy"></div>
+        <div class="work-overlay">
+          <div class="work-info">
+            <span class="work-year">[20XX]</span>
+            <h3>Fincred</h3>
+            <p class="work-line" id="work-line-1">[adjust] Fast, secure credit access for public and private-sector workers.</p>
+            <span class="work-arrow">View case ↗</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="work-card reveal">
+        <div class="work-visual"><span class="work-index-badge">02</span><img src="preview-groove.jpg" alt="Groove Insights preview" loading="lazy"></div>
+        <div class="work-overlay">
+          <div class="work-info">
+            <span class="work-year">[20XX]</span>
+            <h3>Groove Insights</h3>
+            <p class="work-line" id="work-line-2">[adjust] Brand site for a full-service advertising agency.</p>
+            <span class="work-arrow">View case ↗</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="work-card reveal">
+        <div class="work-visual"><span class="work-index-badge">03</span><img src="preview-planogs.jpg" alt="GS Saude preview" loading="lazy"></div>
+        <div class="work-overlay">
+          <div class="work-info">
+            <span class="work-year">[20XX]</span>
+            <h3>GS Saúde</h3>
+            <p class="work-line" id="work-line-3">[adjust] Health plan platform with telemedicine and member services.</p>
+            <span class="work-arrow">View case ↗</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="work-card reveal">
+        <div class="work-visual"><span class="work-index-badge">04</span><img src="preview-umbumorena.jpg" alt="Umbu Morena preview" loading="lazy"></div>
+        <div class="work-overlay">
+          <div class="work-info">
+            <span class="work-year">[20XX]</span>
+            <h3>Umbu Morena</h3>
+            <p class="work-line" id="work-line-4">[adjust] Fashion e-commerce store built on WooCommerce.</p>
+            <span class="work-arrow">View case ↗</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="work-card reveal">
+        <div class="work-visual"><span class="work-index-badge">05</span><img src="preview-fazendaheckert.jpg" alt="Fazenda das Flores Heckert preview" loading="lazy"></div>
+        <div class="work-overlay">
+          <div class="work-info">
+            <span class="work-year">[20XX]</span>
+            <h3>Fazenda das Flores Heckert</h3>
+            <p class="work-line" id="work-line-5">[adjust] Booking site for a rural flower-farm tourist attraction.</p>
+            <span class="work-arrow">View case ↗</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="work-card reveal">
+        <div class="work-visual"><span class="work-index-badge">06</span><img src="preview-cdlnf.jpg" alt="CDL Nova Friburgo preview" loading="lazy"></div>
+        <div class="work-overlay">
+          <div class="work-info">
+            <span class="work-year">[20XX]</span>
+            <h3>CDL Nova Friburgo</h3>
+            <p class="work-line" id="work-line-6">[adjust] Institutional site for a local retailers' association.</p>
+            <span class="work-arrow">View case ↗</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="work-card reveal">
+        <div class="work-visual"><span class="work-index-badge">07</span><img src="preview-caritasnf.jpg" alt="Caritas Diocesana de Nova Friburgo preview" loading="lazy"></div>
+        <div class="work-overlay">
+          <div class="work-info">
+            <span class="work-year">[20XX]</span>
+            <h3>Cáritas Diocesana</h3>
+            <p class="work-line" id="work-line-7">[adjust] Site for a diocesan charity and social outreach organization.</p>
+            <span class="work-arrow">View case ↗</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#" class="work-card reveal">
+        <div class="work-visual"><span class="work-index-badge">08</span><img src="preview-victorbravo.jpg" alt="Victor Bravo Design preview" loading="lazy"></div>
+        <div class="work-overlay">
+          <div class="work-info">
+            <span class="work-year">[20XX]</span>
+            <h3>Victor Bravo Design</h3>
+            <p class="work-line" id="work-line-8">[adjust] Personal portfolio for an automotive illustrator.</p>
+            <span class="work-arrow">View case ↗</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="manifesto">
+  <div class="container">
+    <h2 class="reveal" id="manifesto-h2">I don't just build websites — I build the <span>systems</span> that keep them running.</h2>
+    <p class="manifesto-sub reveal" id="manifesto-sub">[adjust — e.g. "Automation-first. Always."]</p>
+  </div>
+</section>
+
+<section id="contact" class="contact reveal">
+  <div class="container">
+    <div class="eyebrow" id="contact-eyebrow" style="justify-content:center;">Contact</div>
+    <h2 id="contact-h2">Let's build something that matters.</h2>
+    <p id="contact-p">Open to remote roles and freelance projects.</p>
+    <p class="contact-aside" id="contact-aside">[adjust to something true — e.g. "Probably automating something at 2am. Feel free to interrupt."]</p>
+    <div class="contact-links">
+      <a href="https://www.linkedin.com/in/wallace-machado-72ab78146" class="contact-link" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a>
+      <a href="mailto:wally.machado@icloud.com" class="contact-link"><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg><span id="label-email">Email</span></a>
+      <a href="https://wa.me/5522999861441" class="contact-link" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <span>© 2026 Wallace Machado</span>
+    <span id="footer-craft">Built with HTML, CSS &amp; a lot of coffee — hosted on [placeholder].</span>
+  </div>
+</footer>
+
+<script>
+  var els = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('in-view');
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.15});
+  els.forEach(function(el){ io.observe(el); });
+
+  var twEl = document.getElementById('typewriter-text');
+  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var twPhrasesEN = ['for businesses.', 'with automation.', 'powered by AI.'];
+  var twPhrasesPT = ['para empresas.', 'com automação.', 'com IA.'];
+  var twPhrases = twPhrasesEN.slice();
+  var twPhraseIndex = 0, twCharIndex = 0, twDeleting = false;
+
+  function twTick(){
+    var current = twPhrases[twPhraseIndex % twPhrases.length];
+    if(!twDeleting){
+      twCharIndex++;
+      twEl.textContent = current.slice(0, twCharIndex);
+      if(twCharIndex === current.length){
+        twDeleting = true;
+        setTimeout(twTick, 2600);
+        return;
+      }
+      setTimeout(twTick, 110);
+    } else {
+      twCharIndex--;
+      twEl.textContent = current.slice(0, twCharIndex);
+      if(twCharIndex === 0){
+        twDeleting = false;
+        twPhraseIndex = (twPhraseIndex + 1) % twPhrases.length;
+        setTimeout(twTick, 700);
+        return;
+      }
+      setTimeout(twTick, 65);
+    }
+  }
+  if(twEl && !reducedMotion){ twTick(); }
+
+  var translations = {
+    en: {
+      'nav-work':'Work',
+      'nav-contact':'Contact',
+      'nav-cta':'Contact Me',
+      'avail-pill':'Available for remote work',
+      'hero-static':'Building intelligent web solutions',
+      'hero-sub':'I build websites, automations and AI-powered systems that help companies grow.',
+      'cta-view':'View Projects',
+      'hero-or':'or',
+      'cta-touch':'Get in touch →',
+      'scroll-text':'Scroll',
+      'work-eyebrow':'Selected Work',
+      'work-h2':"Some things I've built.",
+      'work-line-1':'[adjust] Fast, secure credit access for public and private-sector workers.',
+      'work-line-2':'[adjust] Brand site for a full-service advertising agency.',
+      'work-line-3':'[adjust] Health plan platform with telemedicine and member services.',
+      'work-line-4':'[adjust] Fashion e-commerce store built on WooCommerce.',
+      'work-line-5':'[adjust] Booking site for a rural flower-farm tourist attraction.',
+      'work-line-6':"[adjust] Institutional site for a local retailers' association.",
+      'work-line-7':'[adjust] Site for a diocesan charity and social outreach organization.',
+      'work-line-8':'[adjust] Personal portfolio for an automotive illustrator.',
+      'manifesto-sub':'[adjust — e.g. "Automation-first. Always."]',
+      'contact-eyebrow':'Contact',
+      'contact-h2':"Let's build something that matters.",
+      'contact-p':'Open to remote roles and freelance projects.',
+      'contact-aside':'[adjust to something true — e.g. "Probably automating something at 2am. Feel free to interrupt."]',
+      'label-email':'Email',
+      'footer-craft':'Built with HTML, CSS & a lot of coffee — hosted on [placeholder].',
+      'toggle-label':'PT'
+    },
+    pt: {
+      'nav-work':'Portfólio',
+      'nav-contact':'Contato',
+      'nav-cta':'Fale Comigo',
+      'avail-pill':'Disponível para trabalho remoto',
+      'hero-static':'Construindo soluções web inteligentes',
+      'hero-sub':'Eu crio sites, automações e sistemas com IA que ajudam empresas a crescer.',
+      'cta-view':'Ver Projetos',
+      'hero-or':'ou',
+      'cta-touch':'Entrar em contato →',
+      'scroll-text':'Descer',
+      'work-eyebrow':'Trabalhos Selecionados',
+      'work-h2':'Algumas coisas que eu construí.',
+      'work-line-1':'[ajustar] Crédito rápido e seguro para servidores públicos e privados.',
+      'work-line-2':'[ajustar] Site institucional para uma agência de publicidade completa.',
+      'work-line-3':'[ajustar] Plataforma de plano de saúde com telemedicina e área do beneficiário.',
+      'work-line-4':'[ajustar] Loja de moda feminina construída em WooCommerce.',
+      'work-line-5':'[ajustar] Site de agendamento para um passeio rural de flores.',
+      'work-line-6':'[ajustar] Site institucional para uma associação de lojistas.',
+      'work-line-7':'[ajustar] Site para uma organização de caridade e ação social diocesana.',
+      'work-line-8':'[ajustar] Portfólio pessoal de um ilustrador automotivo.',
+      'manifesto-sub':'[ajustar — ex: "Automação em primeiro lugar. Sempre."]',
+      'contact-eyebrow':'Contato',
+      'contact-h2':'Vamos construir algo que importa.',
+      'contact-p':'Aberto a vagas remotas e projetos freelance.',
+      'contact-aside':'[ajustar para algo verdadeiro — ex: "Provavelmente automatizando algo às 2h da manhã. Pode interromper."]',
+      'label-email':'E-mail',
+      'footer-craft':'Feito com HTML, CSS e muito café — hospedado em [placeholder].',
+      'toggle-label':'EN'
+    }
+  };
+
+  var manifestoHTML = {
+    en: 'I don\'t just build websites — I build the <span>systems</span> that keep them running.',
+    pt: 'Eu não construo só sites — eu construo os <span>sistemas</span> que os mantêm funcionando.'
+  };
+
+  var currentLang = localStorage.getItem('site-lang') || 'en';
+
+  function applyLang(lang){
+    var t = translations[lang];
+    Object.keys(t).forEach(function(id){
+      if(id === 'toggle-label') return;
+      var el = document.getElementById(id);
+      if(el) el.textContent = t[id];
+    });
+    var manifestoEl = document.getElementById('manifesto-h2');
+    if(manifestoEl) manifestoEl.innerHTML = manifestoHTML[lang];
+
+    document.querySelectorAll('.work-arrow').forEach(function(el){
+      el.textContent = lang === 'pt' ? 'Ver projeto ↗' : 'View case ↗';
+    });
+
+    document.getElementById('lang-toggle-label').textContent = t['toggle-label'];
+    document.documentElement.lang = lang;
+
+    twPhrases = (lang === 'pt' ? twPhrasesPT : twPhrasesEN).slice();
+
+    localStorage.setItem('site-lang', lang);
+    currentLang = lang;
+  }
+
+  document.getElementById('lang-toggle-btn').addEventListener('click', function(){
+    applyLang(currentLang === 'en' ? 'pt' : 'en');
+  });
+
+  applyLang(currentLang);
+</script>
+
+</body>
+</html>
